@@ -1,9 +1,9 @@
 LDLIBS=-lpcap
 
-all: airodump
+all: deauth-attack
 
-airodump: main.o radioTapHdr.o IEEE802.11Hdr.o mac.o
+deauth-attack: main.o radioTapHdr.o IEEE802.11Hdr.o mac.o
 	$(LINK.cc) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
 clean:
-	rm -f airodump *.o
+	rm -f deauth-attack *.o
