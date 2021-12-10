@@ -25,27 +25,26 @@ struct WifiHdr final {
     uint8_t type(){ return (ver_type & 0x0C)>>2; };
     bool checkBeacon() { return ver_type & 0xFC == Beacon; }
     bool checkData() { return ver_type & 0xFC == Data; }
-    bool checkFromAP() { return flag & 0x02 == fromAP; }
     Mac BSSID(){
-    	switch(flag & 0x02 == fromAP){
+    	switch(flag & 0x02){
     		case 0:	return addr[2]; //fromDS=0, toDS=0
     		case 1: return addr[0];	//fromDS=0, toDS=1
     		case 2: return addr[1];	//fromDS=1, toDS=0
     	}
     	return Mac::nullMac();
     }
-    
+    //ver_type
     enum: uint8_t {
+		//ver_type
+		Deauthentication = 0xC0,
     	//type
-    	Management = 0x00,
-    	Control = 0x01,
-    	Data = 0x02,
-    	Extension = 0x03,
+		Management = 0x00,
+		Control = 0x01,
+		Data = 0x02,
+		Extension = 0x03,
 		//subType
-		Beacon = 0x8,
-		//DS
-		fromAP = 0x02	//fromDS=1, toDS=0
+		Beacon = 0x8
 	};
-};
+}; 
 typedef WifiHdr *PWifiHdr;
 #pragma pack(pop)
